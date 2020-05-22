@@ -55,11 +55,12 @@ const returnLevelTwo = (number) => {
 
 const Form = () => {
   const [view, setView] = useState("default");
+  const [advice, setAdvice] = useState("");
   const [motherName, setMotherName] = useState("");
   const [childName, setChildName] = useState("");
   const [recording, setRecording] = useState({
     activity: {
-      isHigh: null,
+      isHigh: "Y",
       ans: {
         one: null,
         two: null,
@@ -67,7 +68,7 @@ const Form = () => {
       },
     },
     reaction: {
-      isHigh: null,
+      isHigh: "Y",
       ans: {
         one: null,
         two: null,
@@ -75,7 +76,7 @@ const Form = () => {
       },
     },
     attention: {
-      isHigh: null,
+      isHigh: "Y",
       ans: {
         one: null,
         two: null,
@@ -117,7 +118,7 @@ const Form = () => {
         setDefaultError(true);
       } else {
         setDefaultError(false);
-        setView("stepOne");
+        setView("QOne");
       }
     };
     return (
@@ -329,7 +330,7 @@ const Form = () => {
       setQuestionOneDetailError(true);
     } else {
       setQuestionOneDetailError(false);
-      setView("stepTwo");
+      setView("QTwo");
     }
   };
 
@@ -344,7 +345,7 @@ const Form = () => {
       setQuestionTwoDetailError(true);
     } else {
       setQuestionTwoDetailError(false);
-      setView("stepThree");
+      setView("QThree");
     }
   };
 
@@ -365,18 +366,16 @@ const Form = () => {
         date: moment().format("YYYY-MM-DD"),
         mother: motherName,
         child: childName,
-        activity: recording.activity.isHigh === "Y" ? "高" : "低",
         activityOne: recording.activity.ans.one,
         activityTwo: recording.activity.ans.two,
         activityThree: recording.activity.ans.three,
-        reaction: recording.activity.isHigh === "Y" ? "高" : "低",
         reactionOne: recording.reaction.ans.one,
         reactionTwo: recording.reaction.ans.two,
         reactionThree: recording.reaction.ans.three,
-        attention: recording.attention.isHigh === "Y" ? "高" : "低",
         attentionOne: recording.attention.ans.one,
         attentionTwo: recording.attention.ans.two,
         attentionThree: recording.attention.ans.three,
+        advice: advice,
       };
 
       $.ajax({
@@ -951,7 +950,17 @@ const Form = () => {
             </RadioGroup>
           </FormControl>
         </ul>
-
+        <label>針對本週的氣質資訊，有什麼有要回饋的呢？</label>
+        <textarea
+          style={{
+            width: "100%",
+            height: 80,
+            margin: "12px 0",
+            resize: "none",
+            borderRadius: 5,
+          }}
+          onChange={(event) => setAdvice(event.target.value)}
+        ></textarea>
         <Button
           variant="contained"
           color="primary"
@@ -1939,7 +1948,7 @@ const Form = () => {
       case "stepOne":
         return QuestionOne();
         break;
-      case "activityYDetail":
+      case "QOne":
         return QuestionOneYDetail();
         break;
       case "activityNDetail":
@@ -1948,7 +1957,7 @@ const Form = () => {
       case "stepTwo":
         return QuestionTwo();
         break;
-      case "reactionYDetail":
+      case "QTwo":
         return QuestionTwoYDetail();
         break;
       case "reactionNDetail":
@@ -1957,7 +1966,7 @@ const Form = () => {
       case "stepThree":
         return QuestionThree();
         break;
-      case "attentionYDetail":
+      case "QThree":
         return QuestionThreeYDetail();
         break;
       case "attentionNDetail":
