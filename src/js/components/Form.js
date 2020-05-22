@@ -396,7 +396,7 @@ const Form = () => {
   const QuestionOneYDetail = () => {
     return (
       <div>
-        <div>第二週-活動量高</div>
+        <div>第二週-易養型</div>
         <div className="error">
           {questionOneDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -409,7 +409,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                活動量太高的孩子，常常嘰嘰喳喳吵個不停，所以活動量高就是不好的氣質*
+                易養型的孩子時常表現出正向的情緒，較願意親近他人，也較能夠適應環境。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -440,7 +440,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                孩子常跑來跑去，或吃飯離開座位等，並非他故意搗蛋，但可適當宣洩、再約束其天生氣質使然的高活動量。*
+                易養型的孩子在各方面能力都比較好，所以這種孩子的父母可以完全不用花心思在教養上。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -471,7 +471,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                針對活動量高的孩子，除了可讓孩子發洩過度的精力外，並適時鼓勵孩子做一些靜態的活動。*
+                易養型的孩子可能因為太過於親近他人、甚至來者不拒，可透過與孩子討論、說故事，或角色扮演，以提升孩子的警覺心。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -624,7 +624,7 @@ const Form = () => {
   const QuestionTwoYDetail = () => {
     return (
       <div>
-        <div>第二週-反應強度高</div>
+        <div>第二週-難養型</div>
         <div className="error">
           {questionTwoDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -637,8 +637,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                是指孩子說話、哭鬧的聲音，或是表現快樂或煩躁的情緒時，反應是強烈或溫和。
-                所以反應強度高就是不好的氣質。*
+                難養型氣質的孩子，俗稱為「磨娘精」，代表這孩子就是壞、就是故意搗蛋、不願意配合父母。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -669,7 +668,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                當孩子表現出強烈的情緒反應時，在確保孩子的行為符合安全、合宜的狀況下，應先接納與理解孩子的情緒，而非一昧地指責孩子的情緒強度*
+                對於難養型氣質的孩子，雖然教養上會讓父母較為辛苦，但若父母若能覺察孩子這樣的氣質特性，並做出對應的合宜教養，親子之間亦可建立起促使孩子身心潛能順利發展的親密依附關係。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -700,7 +699,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                理解孩子所表達的情緒外，也要提醒孩子考慮周遭環境，以免因為情緒強度過強而對環境造成干擾。也多鼓勵孩子以多元方式呈現與表達情緒，避免過於侷限而造成過強的情緒反應。*
+                父母應試著讓自己找到難養型孩子的優點，並協助孩子塑造正向的因應與社交策略。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -854,7 +853,7 @@ const Form = () => {
   const QuestionThreeYDetail = () => {
     return (
       <div>
-        <div>第二週-注意力分散度高</div>
+        <div>第二週-慢吞吞型</div>
         <div className="error">
           {questionThreeDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -867,7 +866,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                注意力分散度較高的孩子，不論什麼刺激，他都會注意，因此顯得無法專注於特定刺激，所以需要特別的安排來幫助他專注。*
+                慢吞吞型氣質的孩子也需要父母的關注，父母應更敏感的覺察到孩子的需求，並適時的給予回應。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -898,7 +897,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                為了提高孩子的注意力專注度，寫功課時最好持續撰寫一個小時以上，甚至於越久越好，以訓練他的專注力。*
+                慢吞吞型氣質的孩子對於新的人、事、物適應較慢，應透過漸進的方式讓孩子接受新刺激，並協助孩子學習安排自己的時間結構。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -929,7 +928,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                當注意力較易分散的孩子在做功課時，必須先移開桌面上的物品，只放置和功課相關的必要物件。*
+                慢吞吞氣質的孩子動作較慢，就是因為他太懶惰，所以父母一定要時時盯緊、催促他，訓練他的速度。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1112,7 +1111,7 @@ const Form = () => {
         <div>測驗結果</div>
         {res.activity.isHigh === "Y" ? (
           <Fragment>
-            <div>第二週-活動量高</div>
+            <div>第二週-易養型</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1122,7 +1121,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    活動量太高的孩子，常常嘰嘰喳喳吵個不停，所以活動量高就是不好的氣質
+                    易養型的孩子時常表現出正向的情緒，較願意親近他人，也較能夠適應環境。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1138,7 +1137,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.one === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1149,7 +1148,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.one === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1164,7 +1163,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    孩子常跑來跑去，或吃飯離開座位等，並非他故意搗蛋，但可適當宣洩、再約束其天生氣質使然的高活動量。
+                    易養型的孩子在各方面能力都比較好，所以這種孩子的父母可以完全不用花心思在教養上。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1180,7 +1179,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.two === "Y"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1191,7 +1190,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.two === "N"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1206,7 +1205,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    針對活動量高的孩子，除了可讓孩子發洩過度的精力外，並適時鼓勵孩子做一些靜態的活動。
+                    易養型的孩子可能因為太過於親近他人、甚至來者不拒，可透過與孩子討論、說故事，或角色扮演，以提升孩子的警覺心。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1378,7 +1377,7 @@ const Form = () => {
         <Divider style={{ margin: "15px 0" }} />
         {res.reaction.isHigh === "Y" ? (
           <Fragment>
-            <div>第二週-反應強度高</div>
+            <div>第二週-難養型</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1388,8 +1387,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    是指孩子說話、哭鬧的聲音，或是表現快樂或煩躁的情緒時，反應是強烈或溫和。
-                    所以反應強度高就是不好的氣質。
+                    難養型氣質的孩子，俗稱為「磨娘精」，代表這孩子就是壞、就是故意搗蛋、不願意配合父母。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1432,7 +1430,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    當孩子表現出強烈的情緒反應時，在確保孩子的行為符合安全、合宜的狀況下，應先接納與理解孩子的情緒，而非一昧地指責孩子的情緒強度
+                    對於難養型氣質的孩子，雖然教養上會讓父母較為辛苦，但若父母若能覺察孩子這樣的氣質特性，並做出對應的合宜教養，親子之間亦可建立起促使孩子身心潛能順利發展的親密依附關係。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1475,7 +1473,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    理解孩子所表達的情緒外，也要提醒孩子考慮周遭環境，以免因為情緒強度過強而對環境造成干擾。也多鼓勵孩子以多元方式呈現與表達情緒，避免過於侷限而造成過強的情緒反應。
+                    父母應試著讓自己找到難養型孩子的優點，並協助孩子塑造正向的因應與社交策略。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1650,7 +1648,7 @@ const Form = () => {
 
         {res.attention.isHigh === "Y" ? (
           <Fragment>
-            <div>第二週-注意力分散度高</div>
+            <div>第二週-慢吞吞型</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1660,7 +1658,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    注意力分散度較高的孩子，不論什麼刺激，他都會注意，因此顯得無法專注於特定刺激，所以需要特別的安排來幫助他專注。
+                    慢吞吞型氣質的孩子也需要父母的關注，父母應更敏感的覺察到孩子的需求，並適時的給予回應。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1702,7 +1700,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    為了提高孩子的注意力專注度，寫功課時最好持續撰寫一個小時以上，甚至於越久越好，以訓練他的專注力。
+                    慢吞吞型氣質的孩子對於新的人、事、物適應較慢，應透過漸進的方式讓孩子接受新刺激，並協助孩子學習安排自己的時間結構。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1718,7 +1716,7 @@ const Form = () => {
                     disabled
                     style={
                       res.attention.ans.two === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1729,7 +1727,7 @@ const Form = () => {
                     disabled
                     style={
                       res.attention.ans.two === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1745,7 +1743,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    當注意力較易分散的孩子在做功課時，必須先移開桌面上的物品，只放置和功課相關的必要物件。
+                    慢吞吞氣質的孩子動作較慢，就是因為他太懶惰，所以父母一定要時時盯緊、催促他，訓練他的速度。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1761,7 +1759,7 @@ const Form = () => {
                     disabled
                     style={
                       res.attention.ans.three === "Y"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1772,7 +1770,7 @@ const Form = () => {
                     disabled
                     style={
                       res.attention.ans.three === "N"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
