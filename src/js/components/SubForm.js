@@ -38,6 +38,9 @@ const returnLevelOne = (section) => {
     case 5:
       levelOne = "impulsiveness";
       break;
+    case 6:
+      levelOne = "approach";
+      break;
   }
   return levelOne;
 };
@@ -89,6 +92,13 @@ const Form = () => {
       },
     },
     impulsiveness: {
+      isHigh: null,
+      ans: {
+        one: null,
+        two: null,
+      },
+    },
+    approach: {
       isHigh: null,
       ans: {
         one: null,
@@ -223,17 +233,26 @@ const Form = () => {
       submitQuestion(5);
     }
   };
+  const [questionSixError, setQuestionSixError] = useState(false);
+  const questionSixNext = () => {
+    if (recording.approach.isHigh === null) {
+      setQuestionSixError(true);
+    } else {
+      setQuestionSixError(false);
+      submitQuestion(6);
+    }
+  };
   const QuestionOne = () => {
     return (
       <div>
         <div className="title" style={{ fontSize: 20 }}>
-          第三週-憤怒/挫折感
+          第二週-活動量
         </div>
         <div className="error">
           {questionOneError ? "請選擇必選欄位*" : null}
         </div>
         <FormControl component="fieldset">
-          <FormLabel component="legend">您的孩子憤怒/挫折感為*</FormLabel>
+          <FormLabel component="legend">您的孩子活動量為*</FormLabel>
           <RadioGroup
             aria-label="activity"
             name="activity"
@@ -269,13 +288,13 @@ const Form = () => {
     return (
       <div>
         <div className="title" style={{ fontSize: 20 }}>
-          第三週-感官不適度
+          第二週-羞怯
         </div>
         <div className="error">
           {questionTwoError ? "請選擇必選欄位*" : null}
         </div>
         <FormControl component="fieldset">
-          <FormLabel component="legend">您的孩子感官不適度為*</FormLabel>
+          <FormLabel component="legend">您的孩子羞怯為*</FormLabel>
           <RadioGroup
             aria-label="shy"
             name="shy"
@@ -311,13 +330,13 @@ const Form = () => {
     return (
       <div>
         <div className="title" style={{ fontSize: 20 }}>
-          第三週-易被撫慰度
+          第二週-高強度快活感
         </div>
         <div className="error">
           {questionThreeError ? "請選擇必選欄位*" : null}
         </div>
         <FormControl component="fieldset">
-          <FormLabel component="legend">您的孩子易被撫慰度為*</FormLabel>
+          <FormLabel component="legend">您的孩子高強度快活感為*</FormLabel>
           <RadioGroup
             aria-label="happy"
             name="happy"
@@ -353,13 +372,13 @@ const Form = () => {
     return (
       <div>
         <div className="title" style={{ fontSize: 20 }}>
-          第三週-害怕
+          第二週-微笑
         </div>
         <div className="error">
           {questionFourError ? "請選擇必選欄位*" : null}
         </div>
         <FormControl component="fieldset">
-          <FormLabel component="legend">您的孩子害怕為*</FormLabel>
+          <FormLabel component="legend">您的孩子微笑為*</FormLabel>
           <RadioGroup
             aria-label="smile"
             name="smile"
@@ -395,13 +414,13 @@ const Form = () => {
     return (
       <div>
         <div className="title" style={{ fontSize: 20 }}>
-          第三週-憂傷
+          第二週-衝動性
         </div>
         <div className="error">
           {questionFiveError ? "請選擇必選欄位*" : null}
         </div>
         <FormControl component="fieldset">
-          <FormLabel component="legend">您的孩子憂傷為*</FormLabel>
+          <FormLabel component="legend">您的孩子衝動性為*</FormLabel>
           <RadioGroup
             aria-label="impulsiveness"
             name="impulsiveness"
@@ -426,6 +445,48 @@ const Form = () => {
           disableElevation
           fullWidth
           onClick={questionFiveNext}
+        >
+          下一步
+        </Button>
+      </div>
+    );
+  };
+
+  const QuestionSix = () => {
+    return (
+      <div>
+        <div className="title" style={{ fontSize: 20 }}>
+          第二週-趨近性/(正向)期望
+        </div>
+        <div className="error">
+          {questionFiveError ? "請選擇必選欄位*" : null}
+        </div>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">您的孩子趨近性為*</FormLabel>
+          <RadioGroup
+            aria-label="approach"
+            name="approach"
+            value={recording.approach.isHigh}
+            onChange={(e) => recordSection(6, e.target.value)}
+          >
+            <FormControlLabel
+              value="Y"
+              control={<Radio color="primary" />}
+              label="高"
+            />
+            <FormControlLabel
+              value="N"
+              control={<Radio color="primary" />}
+              label="低"
+            />
+          </RadioGroup>
+        </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          fullWidth
+          onClick={questionSixNext}
         >
           下一步
         </Button>
@@ -492,6 +553,20 @@ const Form = () => {
       setQuestionFiveDetailError(true);
     } else {
       setQuestionFiveDetailError(false);
+      setView("stepSix");
+    }
+  };
+
+  const [questionSixDetailError, setQuestionSixDetailError] = useState(false);
+
+  const questionSixDetailNext = () => {
+    if (
+      recording.approach.ans.one === null ||
+      recording.approach.ans.two === null
+    ) {
+      setQuestionSixDetailError(true);
+    } else {
+      setQuestionSixDetailError(false);
       setView("seeResult");
     }
   };
@@ -499,7 +574,7 @@ const Form = () => {
   const QuestionOneYDetail = () => {
     return (
       <div>
-        <div>第三週-憤怒/挫折感高</div>
+        <div>第二週-活動量高</div>
         <div className="error">
           {questionOneDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -512,7 +587,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                憤怒／挫折感較高的孩子，沒順他的意、找不到想玩的東西、禁止他想做的事、中斷他正在做的事、叫他去睡覺時，都很容易表現出生氣、受挫的情緒。*
+                活動量太高的孩子，常常嘰嘰喳喳吵個不停，所以活動量高就是不好的氣質*
               </li>
             </FormLabel>
             <RadioGroup
@@ -543,7 +618,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                面對孩子的挫折，要直接指責，告訴他哪裡做不好，並透過「你才試一次就放棄！」來刺激他。*
+                孩子常跑來跑去，或吃飯離開座位等，並非他故意搗蛋，但可適當宣洩、再約束其天生氣質使然的高活動量。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -582,7 +657,7 @@ const Form = () => {
   const QuestionOneNDetail = () => {
     return (
       <div>
-        <div>第三週-憤怒/挫折感低</div>
+        <div>第二週-活動量低</div>
         <div className="error">
           {questionOneDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -595,7 +670,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                憤怒／挫折感較低的孩子，沒順他的意、找不到想玩的東西、禁止他想做的事、中斷他正在做的事、叫他去睡覺時，較不會表現出生氣、受挫的情緒。*
+                活動量太低的孩子，做事情常常太懶、太慢，所以活動量低就是不好的氣質*
               </li>
             </FormLabel>
             <RadioGroup
@@ -626,7 +701,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                孩子較不會憤怒、挫折這是最好的，不要特別去教他如何增進情緒的認識。*
+                對於活動量較低的孩子，父母除了要提供增進動作發展活動的機會，讓孩子嘗試探索、練習，自身亦可投入體能活動*
               </li>
             </FormLabel>
             <RadioGroup
@@ -665,7 +740,7 @@ const Form = () => {
   const QuestionTwoYDetail = () => {
     return (
       <div>
-        <div>第三週-感官不適度高</div>
+        <div>第二週-羞怯高</div>
         <div className="error">
           {questionTwoDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -678,7 +753,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                感官不適度高的孩子，較容易被疼痛所困擾，易因為小小的割傷或瘀青就大哭，或是身體不小心被弄濕一點點，亦或者感覺到有點冷或生病的時候，就會反覆向父母抱怨。*
+                羞怯高的孩子在陌生人群中行為顯得緊張，較無法自在與人相處，即便是跟認識很久的人在一起也會感到害羞*
               </li>
             </FormLabel>
             <RadioGroup
@@ -709,7 +784,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                對於感官不適度高的孩子，可適度調整環境或刺激，讓孩子感到舒適。*
+                即便孩子不願意接觸人，也一定要帶他四處結交其他的朋友，一定要不斷要求他主動認識越多人越好，不然長大之後可能會沒有交友的能力。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -748,7 +823,7 @@ const Form = () => {
   const QuestionTwoNDetail = () => {
     return (
       <div>
-        <div>第三週-感官不適度低</div>
+        <div>第二週-羞怯低</div>
         <div className="error">
           {questionTwoDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -761,7 +836,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                感官不適度低的孩子，較不易被疼痛所困擾，也不會因為小小的割傷或瘀青就大哭，同樣即使身體不小心被弄濕，亦或者感覺到有點冷或生病的時候，也不會反覆向父母抱怨。*
+                羞怯低的孩子幾乎能自在地與任何人相處，在陌生的人群中也不會害羞，也可以自在地邀請別的小孩一起玩。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -792,7 +867,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                這樣的孩子對於自己受傷、不舒服較不會主動向父母說，因此父母會需要多花些心力適當留意孩子所發生的事情、身體狀況等，以給予幫助。*
+                因為孩子可自在接觸人群，為了避免孩子暴露於人際危險中，一定要時時刻刻要求孩子在陌生人群中表現出害羞。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -831,7 +906,7 @@ const Form = () => {
   const QuestionThreeYDetail = () => {
     return (
       <div>
-        <div>第三週-易被撫慰度高</div>
+        <div>第二週-高強度快活感得分高</div>
         <div className="error">
           {questionThreeDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -844,7 +919,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                易被撫慰度高的孩子，對於生氣心煩難過的情緒都比較容易安撫、不會持續太久，所以在他心煩難過時完全不用特別去理會他。*
+                高強度快活感得分高的孩子，傾向選擇具有刺激或冒險性或享受於激烈的遊戲方式。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -875,7 +950,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                父母敏於覺察孩子的情緒反應，即使孩子情緒過了，也可以試著聽聽孩子的想法，跟孩子討論他的心情。*
+                對於高強度快活感得分高的孩子，父母應試著了解他的氣質與特性，並注意孩子的遊戲安全問題，但非全然制止孩子進行此類遊戲。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -914,7 +989,7 @@ const Form = () => {
   const QuestionThreeNDetail = () => {
     return (
       <div>
-        <div>第三週-易被撫慰度低</div>
+        <div>第二週-高強度快活感得分低</div>
         <div className="error">
           {questionThreeDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -927,7 +1002,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                易被撫慰度低的孩子，生氣心煩難過的情緒會持續十分鐘或更久，所以在他生氣心煩時應該要特別斥責他。*
+                高強度快活感得分低的孩子，較不會選擇具有刺激或冒險性或享受於激烈的遊戲方式。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -958,7 +1033,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                孩子正在經歷情緒的當下，可以先引領孩子離開情緒的現場，並試著理解孩子的感覺。*
+                對於高強度快活感得分低的孩子，父母應試著了解他的氣質與特性，接納孩子所喜愛的玩法，但不強迫孩子一定要按照甚麼樣的方式遊戲。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -997,7 +1072,7 @@ const Form = () => {
   const QuestionFourYDetail = () => {
     return (
       <div>
-        <div>第三週-害怕高</div>
+        <div>第二週-微笑高</div>
         <div className="error">
           {questionFourDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -1010,7 +1085,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                害怕程度較高的孩子，時常會因為一些事物而感到害怕，像是怕黑、怕火、怕大聲，也會害怕小偷、電視上的怪物、或是想像中惡魔等。*
+                微笑較高的孩子，常對他喜歡的人笑，自己玩的時候、看有趣的故事、電視或電影時、和其他小朋友玩時候，常常開心笑，或笑得很大聲。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1041,7 +1116,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                當孩子感到害怕時，一定要告訴他們「要勇敢一點」、「這沒什麼好怕的」、「你想太多了」，訓練他的勇氣。*
+                對於微笑較高的孩子，需要提醒孩子覺察自身情緒與環境之關係，若因孩子表達正向情緒，受到外界不當回應而受傷時，父母要特別用心去發覺，並引導他向傷害他的人表達內心的感受。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1080,7 +1155,7 @@ const Form = () => {
   const QuestionFourNDetail = () => {
     return (
       <div>
-        <div>第三週-害怕低</div>
+        <div>第二週-微笑低</div>
         <div className="error">
           {questionFourDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -1093,7 +1168,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                害怕程度較低的孩子，較不會因為一些事物而感到害怕，像是不怕黑、不怕火、也怕大聲，也不會對小偷、電視上的怪物、或是想像中惡魔等感到害怕。*
+                微笑較低的孩子，不常對他喜歡的人笑，自己玩的時候、看有趣的故事、電視或電影時，以及和其他小朋友玩的時候，較少開心笑，也不會笑得很大聲。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1124,7 +1199,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                孩子什麼都不怕，是最好不過了，也更不用擔心他是否會遭受到什麼危險。*
+                對於微笑較低的孩子，需提醒孩子適切表達微笑開心情緒，若因孩子表達過於微弱之正向情緒，受到外界不當回應而受傷時，父母要特別用心去發覺，並引導他向傷害他的人表達內心的感受。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1163,7 +1238,7 @@ const Form = () => {
   const QuestionFiveYDetail = () => {
     return (
       <div>
-        <div>第三週-憂傷高</div>
+        <div>第二週-衝動性高</div>
         <div className="error">
           {questionFiveDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -1176,7 +1251,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                憂傷分數較高的孩子，容易因無法完成某些事的時候、原定的計畫未實現、喜歡的親戚朋友要離開、心愛的玩具不見或壞掉…等，感到氣餒、傷心與難過。*
+                衝動性高的孩子經常很快地開始進行或嘗試一個活動，對於想要做的事情或說的話會直接做或直接脫口而出，較少停下來思考或等待。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1207,7 +1282,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                父母應善用觀察力，仔細解讀孩子真正的感受，不要急著講道理，可以試著說出孩子目前的感受，也可以給他一些支持與鼓勵，讓孩子感受到被接納與支持，並讓情緒進一步得到舒緩。*
+                衝動性太高的孩子若莽撞或衝動地做出一件事情或行為，可能引發他人的不舒服或造成負向的結果，可適度引導孩子先暫停一下，思考可能發生什麼事情，若孩子未能述說出來時，父母可引導或幫他說出來。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1246,7 +1321,7 @@ const Form = () => {
   const QuestionFiveNDetail = () => {
     return (
       <div>
-        <div>第三週-憂傷低</div>
+        <div>第二週-衝動性低</div>
         <div className="error">
           {questionFiveDetailError ? "請選擇必選欄位" : ""}
         </div>
@@ -1259,7 +1334,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                憂傷分數較低的孩子，不易因無法完成某些事的時候、原定的計畫未實現、喜歡的親戚朋友要離開、心愛的玩具不見或壞掉…等，感到氣餒、傷心與難過。*
+                衝動性低的孩子經常需要花一段長時間才會嘗試一個活動，通常不會急著做決定或急著開始。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1290,7 +1365,7 @@ const Form = () => {
                   margin: "10px 0",
                 }}
               >
-                父母應適時肯定孩子不易傷心、難過，但並非強調只能有正向情緒而不可以有負向情緒，若是孩子不懂或不願表現負向情緒，父母應適時展現對於負向情緒的接納，引導孩子說出心中的感受，不要隱藏委屈。*
+                當衝動性較低的孩子經常需要一些時間思考、做事情的速度可能會較慢，父母若能適時等待、理解與同理孩子的反應與感受，以協助他融入活動或接觸環境。*
               </li>
             </FormLabel>
             <RadioGroup
@@ -1319,6 +1394,172 @@ const Form = () => {
           disableElevation
           fullWidth
           onClick={questionFiveDetailNext}
+        >
+          下一步
+        </Button>
+      </div>
+    );
+  };
+
+  const QuestionSixYDetail = () => {
+    return (
+      <div>
+        <div>第二週-趨近性高</div>
+        <div className="error">
+          {questionSixDetailError ? "請選擇必選欄位" : ""}
+        </div>
+        <ul>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">
+              <li
+                style={{
+                  listStyleType: "decimal-leading-zero",
+                  margin: "10px 0",
+                }}
+              >
+                趨近性/(正向)期望較高的孩子，對於自己期待中、感興趣的事情非常具有熱忱*
+              </li>
+            </FormLabel>
+            <RadioGroup
+              aria-label="one"
+              name="one"
+              value={recording.approach.ans.one}
+              onChange={(e) => record(6, 1, e.target.value)}
+            >
+              <FormControlLabel
+                value="Y"
+                control={<Radio color="primary" />}
+                label="是"
+              />
+              <FormControlLabel
+                value="N"
+                control={<Radio color="primary" />}
+                label="否"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          <Divider style={{ margin: "15px 0" }} />
+          <FormControl component="fieldset">
+            <FormLabel component="legend">
+              <li
+                style={{
+                  listStyleType: "decimal-leading-zero",
+                  margin: "10px 0",
+                }}
+              >
+                一旦孩子過於興奮，而無法控制因興奮而表現的干擾行為，父母可適時予以提醒與限制，告知孩子太興奮、坐不住，都會影響後續的事件發展、對周遭人事物造成困擾，更可能忽略自身週遭的危險情境。
+              </li>
+            </FormLabel>
+            <RadioGroup
+              aria-label="two"
+              name="two"
+              value={recording.approach.ans.two}
+              onChange={(e) => record(6, 2, e.target.value)}
+            >
+              <FormControlLabel
+                value="Y"
+                control={<Radio color="primary" />}
+                label="是"
+              />
+              <FormControlLabel
+                value="N"
+                control={<Radio color="primary" />}
+                label="否"
+              />
+            </RadioGroup>
+          </FormControl>
+        </ul>
+
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          fullWidth
+          onClick={questionSixDetailNext}
+        >
+          下一步
+        </Button>
+      </div>
+    );
+  };
+
+  const QuestionSixNDetail = () => {
+    return (
+      <div>
+        <div>第二週-趨近性低</div>
+        <div className="error">
+          {questionSixDetailError ? "請選擇必選欄位" : ""}
+        </div>
+        <ul>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">
+              <li
+                style={{
+                  listStyleType: "decimal-leading-zero",
+                  margin: "10px 0",
+                }}
+              >
+                趨近性/(正向)期望較低的孩子，對於自己期待中、感興趣的事情不會表現得非常具有熱忱*
+              </li>
+            </FormLabel>
+            <RadioGroup
+              aria-label="one"
+              name="one"
+              value={recording.approach.ans.one}
+              onChange={(e) => record(6, 1, e.target.value)}
+            >
+              <FormControlLabel
+                value="Y"
+                control={<Radio color="primary" />}
+                label="是"
+              />
+              <FormControlLabel
+                value="N"
+                control={<Radio color="primary" />}
+                label="否"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          <Divider style={{ margin: "15px 0" }} />
+          <FormControl component="fieldset">
+            <FormLabel component="legend">
+              <li
+                style={{
+                  listStyleType: "decimal-leading-zero",
+                  margin: "10px 0",
+                }}
+              >
+                一旦孩子過於平靜，而無法適時展現正向期望情緒而表現得過於冷淡，父母可適時予以提醒與告知，如果孩子太平靜，可能會失去後續的事件正向發展機會、對周遭人事物形成距離感，因而錯失原本期待中的事物。*
+              </li>
+            </FormLabel>
+            <RadioGroup
+              aria-label="two"
+              name="two"
+              value={recording.approach.ans.two}
+              onChange={(e) => record(6, 2, e.target.value)}
+            >
+              <FormControlLabel
+                value="Y"
+                control={<Radio color="primary" />}
+                label="是"
+              />
+              <FormControlLabel
+                value="N"
+                control={<Radio color="primary" />}
+                label="否"
+              />
+            </RadioGroup>
+          </FormControl>
+        </ul>
+
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          fullWidth
+          onClick={questionSixDetailNext}
         >
           下一步
         </Button>
@@ -1377,7 +1618,7 @@ const Form = () => {
         <div>測驗結果</div>
         {res.activity.isHigh === "Y" ? (
           <Fragment>
-            <div>第三週-憤怒/挫折感高</div>
+            <div>第二週-活動量高</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1387,7 +1628,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    憤怒／挫折感較高的孩子，沒順他的意、找不到想玩的東西、禁止他想做的事、中斷他正在做的事、叫他去睡覺時，都很容易表現出生氣、受挫的情緒。
+                    活動量太高的孩子，常常嘰嘰喳喳吵個不停，所以活動量高就是不好的氣質
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1403,7 +1644,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.one === "Y"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1414,7 +1655,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.one === "N"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1429,7 +1670,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    面對孩子的挫折，要直接指責，告訴他哪裡做不好，並透過「你才試一次就放棄！」來刺激他。
+                    孩子常跑來跑去，或吃飯離開座位等，並非他故意搗蛋，但可適當宣洩、再約束其天生氣質使然的高活動量。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1445,7 +1686,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.two === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1456,7 +1697,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.two === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1468,7 +1709,7 @@ const Form = () => {
           </Fragment>
         ) : (
           <Fragment>
-            <div>第三週-憤怒/挫折感低</div>
+            <div>第二週-活動量低</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1478,7 +1719,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    憤怒／挫折感較低的孩子，沒順他的意、找不到想玩的東西、禁止他想做的事、中斷他正在做的事、叫他去睡覺時，較不會表現出生氣、受挫的情緒。
+                    活動量太低的孩子，做事情常常太懶、太慢，所以活動量低就是不好的氣質
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1494,7 +1735,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.one === "Y"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1505,7 +1746,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.one === "N"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1520,7 +1761,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    孩子較不會憤怒、挫折這是最好的，不要特別去教他如何增進情緒的認識。
+                    對於活動量較低的孩子，父母除了要提供增進動作發展活動的機會，讓孩子嘗試探索、練習，自身亦可投入體能活動
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1536,7 +1777,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.two === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1547,7 +1788,7 @@ const Form = () => {
                     disabled
                     style={
                       res.activity.ans.two === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1559,7 +1800,7 @@ const Form = () => {
         <Divider style={{ margin: "15px 0" }} />
         {res.shy.isHigh === "Y" ? (
           <Fragment>
-            <div>第三週-感官不適度高</div>
+            <div>第二週-羞怯高</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1569,7 +1810,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    感官不適度高的孩子，較容易被疼痛所困擾，易因為小小的割傷或瘀青就大哭，或是身體不小心被弄濕一點點，亦或者感覺到有點冷或生病的時候，就會反覆向父母抱怨。
+                    羞怯高的孩子在陌生人群中行為顯得緊張，較無法自在與人相處，即便是跟認識很久的人在一起也會感到害羞。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1612,7 +1853,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    對於感官不適度高的孩子，可適度調整環境或刺激，讓孩子感到舒適。
+                    即便孩子不願意接觸人，也一定要帶他四處結交其他的朋友，一定要不斷要求他主動認識越多人越好，不然長大之後可能會沒有交友的能力。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1628,7 +1869,7 @@ const Form = () => {
                     disabled
                     style={
                       res.shy.ans.two === "Y"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1639,7 +1880,7 @@ const Form = () => {
                     disabled
                     style={
                       res.shy.ans.two === "N"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1649,7 +1890,7 @@ const Form = () => {
           </Fragment>
         ) : (
           <Fragment>
-            <div>第三週-感官不適度低</div>
+            <div>第二週-羞怯低</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1659,7 +1900,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    感官不適度低的孩子，較不易被疼痛所困擾，也不會因為小小的割傷或瘀青就大哭，同樣即使身體不小心被弄濕，亦或者感覺到有點冷或生病的時候，也不會反覆向父母抱怨。
+                    羞怯低的孩子幾乎能自在地與任何人相處，在陌生的人群中也不會害羞，也可以自在地邀請別的小孩一起玩。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1702,7 +1943,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    這樣的孩子對於自己受傷、不舒服較不會主動向父母說，因此父母會需要多花些心力適當留意孩子所發生的事情、身體狀況等，以給予幫助。
+                    因為孩子可自在接觸人群，為了避免孩子暴露於人際危險中，一定要時時刻刻要求孩子在陌生人群中表現出害羞。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1718,7 +1959,7 @@ const Form = () => {
                     disabled
                     style={
                       res.shy.ans.two === "Y"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1729,7 +1970,7 @@ const Form = () => {
                     disabled
                     style={
                       res.shy.ans.two === "N"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1743,7 +1984,7 @@ const Form = () => {
 
         {res.happy.isHigh === "Y" ? (
           <Fragment>
-            <div>第三週-易被撫慰度高</div>
+            <div>第二週-高強度快活感</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1753,7 +1994,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    易被撫慰度高的孩子，對於生氣心煩難過的情緒都比較容易安撫、不會持續太久，所以在他心煩難過時完全不用特別去理會他。
+                    高強度快活感得分高的孩子，傾向選擇具有刺激或冒險性或享受於激烈的遊戲方式。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1769,7 +2010,7 @@ const Form = () => {
                     disabled
                     style={
                       res.happy.ans.one === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1780,7 +2021,7 @@ const Form = () => {
                     disabled
                     style={
                       res.happy.ans.one === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1795,7 +2036,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    父母敏於覺察孩子的情緒反應，即使孩子情緒過了，也可以試著聽聽孩子的想法，跟孩子討論他的心情。
+                    對於高強度快活感得分高的孩子，父母應試著了解他的氣質與特性，並注意孩子的遊戲安全問題，但非全然制止孩子進行此類遊戲。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1832,7 +2073,7 @@ const Form = () => {
           </Fragment>
         ) : (
           <Fragment>
-            <div>第三週-易被撫慰度低</div>
+            <div>第二週-高強度快活感</div>
 
             <ul>
               <FormControl component="fieldset">
@@ -1843,7 +2084,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    易被撫慰度低的孩子，生氣心煩難過的情緒會持續十分鐘或更久，所以在他生氣心煩時應該要特別斥責他。
+                    高強度快活感得分低的孩子，較不會選擇具有刺激或冒險性或享受於激烈的遊戲方式。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1859,7 +2100,7 @@ const Form = () => {
                     disabled
                     style={
                       res.happy.ans.one === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1870,7 +2111,7 @@ const Form = () => {
                     disabled
                     style={
                       res.happy.ans.one === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -1886,7 +2127,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    孩子正在經歷情緒的當下，可以先引領孩子離開情緒的現場，並試著理解孩子的感覺。
+                    對於高強度快活感得分低的孩子，父母應試著了解他的氣質與特性，接納孩子所喜愛的玩法，但不強迫孩子一定要按照甚麼樣的方式遊戲。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1927,7 +2168,7 @@ const Form = () => {
 
         {res.smile.isHigh === "Y" ? (
           <Fragment>
-            <div>第三週-害怕高</div>
+            <div>第二週-微笑</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -1937,7 +2178,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    害怕程度較高的孩子，時常會因為一些事物而感到害怕，像是怕黑、怕火、怕大聲，也會害怕小偷、電視上的怪物、或是想像中惡魔等。
+                    微笑較高的孩子，常對他喜歡的人笑，自己玩的時候、看有趣的故事、電視或電影時、和其他小朋友玩時候，常常開心笑，或笑得很大聲。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1979,7 +2220,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    當孩子感到害怕時，一定要告訴他們「要勇敢一點」、「這沒什麼好怕的」、「你想太多了」，訓練他的勇氣。
+                    對於微笑較高的孩子，需要提醒孩子覺察自身情緒與環境之關係，若因孩子表達正向情緒，受到外界不當回應而受傷時，父母要特別用心去發覺，並引導他向傷害他的人表達內心的感受。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -1995,7 +2236,7 @@ const Form = () => {
                     disabled
                     style={
                       res.smile.ans.two === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -2006,7 +2247,7 @@ const Form = () => {
                     disabled
                     style={
                       res.smile.ans.two === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -2016,7 +2257,7 @@ const Form = () => {
           </Fragment>
         ) : (
           <Fragment>
-            <div>第三週-害怕低</div>
+            <div>第二週-微笑低</div>
 
             <ul>
               <FormControl component="fieldset">
@@ -2027,7 +2268,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    害怕程度較低的孩子，較不會因為一些事物而感到害怕，像是不怕黑、不怕火、也怕大聲，也不會對小偷、電視上的怪物、或是想像中惡魔等感到害怕。
+                    微笑較低的孩子，不常對他喜歡的人笑，自己玩的時候、看有趣的故事、電視或電影時，以及和其他小朋友玩的時候，較少開心笑，也不會笑得很大聲。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -2070,7 +2311,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    孩子什麼都不怕，是最好不過了，也更不用擔心他是否會遭受到什麼危險。
+                    對於微笑較低的孩子，需提醒孩子適切表達微笑開心情緒，若因孩子表達過於微弱之正向情緒，受到外界不當回應而受傷時，父母要特別用心去發覺，並引導他向傷害他的人表達內心的感受。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -2086,7 +2327,7 @@ const Form = () => {
                     disabled
                     style={
                       res.smile.ans.two === "Y"
-                        ? { margin: "5px 0px", background: wrong }
+                        ? { margin: "5px 0px", background: right }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -2097,7 +2338,7 @@ const Form = () => {
                     disabled
                     style={
                       res.smile.ans.two === "N"
-                        ? { margin: "5px 0px", background: right }
+                        ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
                   />
@@ -2111,7 +2352,7 @@ const Form = () => {
 
         {res.impulsiveness.isHigh === "Y" ? (
           <Fragment>
-            <div>第三週-憂傷高</div>
+            <div>第二週-衝動性高</div>
             <ul>
               <FormControl component="fieldset">
                 <FormLabel component="legend">
@@ -2121,7 +2362,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    憂傷分數較高的孩子，容易因無法完成某些事的時候、原定的計畫未實現、喜歡的親戚朋友要離開、心愛的玩具不見或壞掉…等，感到氣餒、傷心與難過。
+                    衝動性高的孩子經常很快地開始進行或嘗試一個活動，對於想要做的事情或說的話會直接做或直接脫口而出，較少停下來思考或等待。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -2163,7 +2404,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    父母應善用觀察力，仔細解讀孩子真正的感受，不要急著講道理，可以試著說出孩子目前的感受，也可以給他一些支持與鼓勵，讓孩子感受到被接納與支持，並讓情緒進一步得到舒緩。
+                    衝動性太高的孩子若莽撞或衝動地做出一件事情或行為，可能引發他人的不舒服或造成負向的結果，可適度引導孩子先暫停一下，思考可能發生什麼事情，若孩子未能述說出來時，父母可引導或幫他說出來。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -2200,7 +2441,7 @@ const Form = () => {
           </Fragment>
         ) : (
           <Fragment>
-            <div>第三週-憂傷低</div>
+            <div>第二週-衝動性低</div>
 
             <ul>
               <FormControl component="fieldset">
@@ -2211,7 +2452,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    憂傷分數較低的孩子，不易因無法完成某些事的時候、原定的計畫未實現、喜歡的親戚朋友要離開、心愛的玩具不見或壞掉…等，感到氣餒、傷心與難過。
+                    衝動性低的孩子經常需要花一段長時間才會嘗試一個活動，通常不會急著做決定或急著開始。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -2254,7 +2495,7 @@ const Form = () => {
                       margin: "10px 0",
                     }}
                   >
-                    父母應適時肯定孩子不易傷心、難過，但並非強調只能有正向情緒而不可以有負向情緒，若是孩子不懂或不願表現負向情緒，父母應適時展現對於負向情緒的接納，引導孩子說出心中的感受，不要隱藏委屈。
+                    當衝動性較低的孩子經常需要一些時間思考、做事情的速度可能會較慢，父母若能適時等待、理解與同理孩子的反應與感受，以協助他融入活動或接觸環境。
                   </li>
                 </FormLabel>
                 <RadioGroup
@@ -2281,6 +2522,190 @@ const Form = () => {
                     disabled
                     style={
                       res.impulsiveness.ans.two === "N"
+                        ? { margin: "5px 0px", background: wrong }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+            </ul>
+          </Fragment>
+        )}
+
+        <Divider style={{ margin: "15px 0" }} />
+
+        {res.approach.isHigh === "Y" ? (
+          <Fragment>
+            <div>第二週-趨近性/(正向)期望高</div>
+            <ul>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">
+                  <li
+                    style={{
+                      listStyleType: "decimal-leading-zero",
+                      margin: "10px 0",
+                    }}
+                  >
+                    趨近性/(正向)期望較高的孩子，對於自己期待中、感興趣的事情非常具有熱忱
+                  </li>
+                </FormLabel>
+                <RadioGroup
+                  aria-label="one"
+                  name="one"
+                  value={res.approach.ans.one}
+                  onChange={(e) => record(3, 1, e.target.value)}
+                >
+                  <FormControlLabel
+                    value="Y"
+                    control={<Radio color="primary" />}
+                    label="是"
+                    disabled
+                    style={
+                      res.approach.ans.one === "Y"
+                        ? { margin: "5px 0px", background: right }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                  <FormControlLabel
+                    value="N"
+                    control={<Radio color="primary" />}
+                    label="否"
+                    disabled
+                    style={
+                      res.approach.ans.one === "N"
+                        ? { margin: "5px 0px", background: wrong }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+              <Divider style={{ margin: "15px 0" }} />
+              <FormControl component="fieldset">
+                <FormLabel component="legend">
+                  <li
+                    style={{
+                      listStyleType: "decimal-leading-zero",
+                      margin: "10px 0",
+                    }}
+                  >
+                    一旦孩子過於興奮，而無法控制因興奮而表現的干擾行為，父母可適時予以提醒與限制，告知孩子太興奮、坐不住，都會影響後續的事件發展、對周遭人事物造成困擾，更可能忽略自身週遭的危險情境。
+                  </li>
+                </FormLabel>
+                <RadioGroup
+                  aria-label="two"
+                  name="two"
+                  value={res.approach.ans.two}
+                  onChange={(e) => record(3, 2, e.target.value)}
+                >
+                  <FormControlLabel
+                    value="Y"
+                    control={<Radio color="primary" />}
+                    label="是"
+                    disabled
+                    style={
+                      res.approach.ans.two === "Y"
+                        ? { margin: "5px 0px", background: right }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                  <FormControlLabel
+                    value="N"
+                    control={<Radio color="primary" />}
+                    label="否"
+                    disabled
+                    style={
+                      res.approach.ans.two === "N"
+                        ? { margin: "5px 0px", background: wrong }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+            </ul>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <div>第二週-趨近性/(正向)期望低</div>
+
+            <ul>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">
+                  <li
+                    style={{
+                      listStyleType: "decimal-leading-zero",
+                      margin: "10px 0",
+                    }}
+                  >
+                    趨近性/(正向)期望較低的孩子，對於自己期待中、感興趣的事情不會表現得非常具有熱忱
+                  </li>
+                </FormLabel>
+                <RadioGroup
+                  aria-label="one"
+                  name="one"
+                  value={res.approach.ans.one}
+                  onChange={(e) => record(3, 1, e.target.value)}
+                >
+                  <FormControlLabel
+                    value="Y"
+                    control={<Radio color="primary" />}
+                    label="是"
+                    disabled
+                    style={
+                      res.approach.ans.one === "Y"
+                        ? { margin: "5px 0px", background: right }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                  <FormControlLabel
+                    value="N"
+                    control={<Radio color="primary" />}
+                    label="否"
+                    disabled
+                    style={
+                      res.approach.ans.one === "N"
+                        ? { margin: "5px 0px", background: wrong }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+
+              <Divider style={{ margin: "15px 0" }} />
+              <FormControl component="fieldset">
+                <FormLabel component="legend">
+                  <li
+                    style={{
+                      listStyleType: "decimal-leading-zero",
+                      margin: "10px 0",
+                    }}
+                  >
+                    一旦孩子過於平靜，而無法適時展現正向期望情緒而表現得過於冷淡，父母可適時予以提醒與告知，如果孩子太平靜，可能會失去後續的事件正向發展機會、對周遭人事物形成距離感，因而錯失原本期待中的事物。
+                  </li>
+                </FormLabel>
+                <RadioGroup
+                  aria-label="two"
+                  name="two"
+                  value={res.approach.ans.two}
+                  onChange={(e) => record(3, 2, e.target.value)}
+                >
+                  <FormControlLabel
+                    value="Y"
+                    control={<Radio color="primary" />}
+                    label="是"
+                    disabled
+                    style={
+                      res.approach.ans.two === "Y"
+                        ? { margin: "5px 0px", background: right }
+                        : { margin: "5px 0px" }
+                    }
+                  />
+                  <FormControlLabel
+                    value="N"
+                    control={<Radio color="primary" />}
+                    label="否"
+                    disabled
+                    style={
+                      res.approach.ans.two === "N"
                         ? { margin: "5px 0px", background: wrong }
                         : { margin: "5px 0px" }
                     }
@@ -2309,27 +2734,30 @@ const Form = () => {
       date: moment().format("YYYY-MM-DD"),
       mother: motherName,
       child: childName,
-      activity: recording.activity.isHigh ? "高" : "低",
+      activity: recording.activity.isHigh === "Y" ? "高" : "低",
       activityOne: recording.activity.ans.one,
       activityTwo: recording.activity.ans.two,
-      shy: recording.shy.isHigh ? "高" : "低",
+      shy: recording.shy.isHigh === "Y" ? "高" : "低",
       shyOne: recording.shy.ans.one,
       shyTwo: recording.shy.ans.two,
-      happy: recording.happy.isHigh ? "高" : "低",
+      happy: recording.happy.isHigh === "Y" ? "高" : "低",
       happyOne: recording.happy.ans.one,
       happyTwo: recording.happy.ans.two,
-      smile: recording.smile.isHigh ? "高" : "低",
+      smile: recording.smile.isHigh === "Y" ? "高" : "低",
       smileOne: recording.smile.ans.one,
       smileTwo: recording.smile.ans.two,
-      impulsiveness: recording.impulsiveness.isHigh ? "高" : "低",
+      impulsiveness: recording.impulsiveness.isHigh === "Y" ? "高" : "低",
       impulsivenessOne: recording.impulsiveness.ans.one,
       impulsivenessTwo: recording.impulsiveness.ans.two,
+      approach: recording.approach.isHigh === "Y" ? "高" : "低",
+      approachOne: recording.approach.ans.one,
+      approachTwo: recording.approach.ans.two,
     };
 
     $.ajax({
       type: "get",
       url:
-        "https://script.google.com/macros/s/AKfycbxJSjLoT1mjh9TifuUPz37N3hH_NTmzdrmPWSkz1y2uv09DkVE8/exec",
+        "https://script.google.com/macros/s/AKfycbxO_iTHQqcF4tpk2IqGM4qoMBT1nAZJZzCFw68l3bEAElKiw8rT/exec",
       data: data,
       dataType: "JSON",
       success: function (response) {
@@ -2389,6 +2817,15 @@ const Form = () => {
         break;
       case "impulsivenessNDetail":
         return QuestionFiveNDetail();
+        break;
+      case "stepSix":
+        return QuestionSix();
+        break;
+      case "approachYDetail":
+        return QuestionSixYDetail();
+        break;
+      case "approachNDetail":
+        return QuestionSixNDetail();
         break;
       case "seeResult":
         request();
